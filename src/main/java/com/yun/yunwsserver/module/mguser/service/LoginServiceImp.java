@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author: yun
  * @createdOn: 2019-07-12 11:16.
@@ -44,5 +46,45 @@ public class LoginServiceImp extends BaseServiceImpl {
         }
 
         return new UserVO(mgUser);
+    }
+
+    public MgUser checkTokenUser(String tokenStr, HttpServletRequest request) {
+        QMgUser qUser = QMgUser.mgUser;
+
+        MgUser appUser = queryFactory.selectFrom(qUser)
+                .where(qUser.loginToken.eq(tokenStr))
+                .fetchFirst();
+
+        // token 无效
+        if (appUser == null) {
+            return null;
+        }
+
+        // 用户禁用了
+        if (appUser.isInValidUser()) {
+            throwCommonError("用户已禁用");
+        }
+
+        return appUser;
+    }
+
+    public MgUser checkAccUser(String accStr, HttpServletRequest request) {
+        QMgUser qUser = QMgUser.mgUser;
+
+        MgUser appUser = queryFactory.selectFrom(qUser)
+                .where(qUser.accessKey.eq(accStr))
+                .fetchFirst();
+
+        // token 无效
+        if (appUser == null) {
+            return null;
+        }
+
+        // 用户禁用了
+        if (appUser.isInValidUser()) {
+            throwCommonError("用户已禁用");
+        }
+
+        return appUser;
     }
 }

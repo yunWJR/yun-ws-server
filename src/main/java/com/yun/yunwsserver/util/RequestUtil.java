@@ -35,4 +35,12 @@ public class RequestUtil {
         }
         return loginUser;
     }
+
+    public static Long getLoginUserId() {
+        return null;
+    }
+
+    public static String getControllerPara() {
+        return null;
+    }
 }

@@ -76,4 +76,9 @@ public class MgUser {
     public void resetKeys() {
         // todo
     }
+
+    @JsonIgnore
+    public boolean isInValidUser() {
+        return getInfo().getEnabled().equals(0);
+    }
 }
