@@ -39,15 +39,15 @@ public class ClientUserController {
         return BaseRstBeanT.SurBean(clientUserService.clientUserInfo(clientId));
     }
 
-    @PostMapping("addClientUser/{clientId}")
-    @ApiOperation("addClientUser")
+    @PostMapping("removeClientUser/{clientId}")
+    @ApiOperation("removeClientUser")
     public BaseRstBeanT<String> removeClientUser(@PathVariable String clientId) {
         clientUserService.removeClientUser(clientId);
         return BaseRstBeanT.SurBean("成功");
     }
 
-    @PostMapping("addClientUser/{clientId}/{platform}")
-    @ApiOperation("addClientUser")
+    @PostMapping("clientUserLogin/{clientId}/{platform}")
+    @ApiOperation("clientUserLogin")
     public BaseRstBeanT<ClientUserLoginVo> clientUserLogin(
             @PathVariable String clientId,
             @PathVariable String platform) {

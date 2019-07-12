@@ -55,7 +55,7 @@ public class ClientUserWsPlatform {
     }
 
     public void renewPara() {
-        String newPara = RandomStringUtils.random(10);
+        String newPara = RandomStringUtils.randomNumeric(10);
         while (StringUtil.hasCtn(para) && newPara.equals(para)) {
             newPara = RandomStringUtils.random(10);
         }

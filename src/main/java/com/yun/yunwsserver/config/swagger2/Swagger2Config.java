@@ -1,5 +1,6 @@
 package com.yun.yunwsserver.config.swagger2;
 
+import com.yun.yunwsserver.util.GlobalConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -29,10 +30,14 @@ public class Swagger2Config {
     @Bean
     public Docket apiSw2() {
         //添加head参数start
-        ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar.name("auth-token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        tokenPar.name(GlobalConstant.Sys.TOKEN_AUTH_DTO).description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
+
+        ParameterBuilder accPar = new ParameterBuilder();
+        accPar.name(GlobalConstant.Sys.ACCESS_AUTH_DTO).description("ACC").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(accPar.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())

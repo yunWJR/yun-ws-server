@@ -92,7 +92,6 @@ public class GroupServiceImpl extends BaseServiceImpl {
         QGroup qGroup = QGroup.group;
         Group group = queryFactory.selectFrom(qGroup)
                 .where(qGroup.pkId.mgUserId.eq(mgUser.getId())
-                        .and(qGroup.pkId.mgUserId.eq(mgUser.getId()))
                         .and(qGroup.pkId.clientGroupId.eq(remarkId)))
                 .fetchFirst();
 
