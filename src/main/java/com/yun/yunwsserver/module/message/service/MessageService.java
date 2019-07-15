@@ -24,6 +24,8 @@ public class MessageService extends BaseServiceImpl {
     private ImWebSocketService webSocketService;
 
     public void pushMessage(MessageDto dto) {
+        dto.reform();
+
         MgUser mgUser = RequestUtil.getAccessUser();
 
         QGroupUserRl userRl = QGroupUserRl.groupUserRl;
