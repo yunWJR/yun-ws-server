@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: yun
@@ -18,5 +20,7 @@ public class MessageDto {
     @Length(max = 200)
     private String clientGroupId;
 
-    private String content;
+    private Map content;
+
+    private List<IgnoreUserPlatformDto> ignoreList;
 }

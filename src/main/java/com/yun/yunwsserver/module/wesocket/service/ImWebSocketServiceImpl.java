@@ -10,6 +10,8 @@ import com.yun.yunwsserver.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: yun
  * @createdOn: 2018/7/25 16:54.
@@ -127,8 +129,33 @@ public class ImWebSocketServiceImpl implements ImWebSocketService {
     }
 
     @Override
-    public void closeClient(Long id, String platform) {
-        // todo
+    public boolean pushMessage(String userId, WsRspMessage msg) {
+        List<ImWsSessionUser> ssUser = ImSessionManager.getSocketUserByUserId(userId);
+
+        boolean suc = true;
+
+        print("发送消息：" + userId + ":" + msg.toJsonStr());
+
+        for (ImWsSessionUser sUser : ssUser) {
+            boolean rst = ImRspManager.sendRsp(sUser.getSession(), msg);
+            if (!rst) {
+                suc = false;
+            }
+        }
+
+        return suc;
+    }
+
+    @Override
+    public void closeClient(String userId, String platform) {
+        ImWsSessionUser ssUser = ImSessionManager.getSocketUserByUserId(userId, platform);
+
+        if (ssUser != null) { //  || !ssUser.isOnline()
+            WsRspMessage rsp = new WsRspMessage();
+            ImRspManager.sendRsp(ssUser.getSession(), rsp);  // todo
+
+            ImSessionManager.removeSessionById(ssUser.getSession().getId());
+        }
     }
 
     // endregion

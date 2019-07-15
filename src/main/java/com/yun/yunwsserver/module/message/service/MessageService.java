@@ -35,7 +35,6 @@ public class MessageService extends BaseServiceImpl {
 
         for (String ssId : userSsIdList) {
             webSocketService.pushMessage(ssId,
-                    null,
                     new WsRspMessage(WsRspMessageType.NewMessage, dto.getContent()));
         }
     }

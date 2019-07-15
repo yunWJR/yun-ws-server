@@ -1,5 +1,6 @@
 package com.yun.yunwsserver.module.clientuser.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.yun.base.Util.StringUtil;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
@@ -29,7 +30,7 @@ import javax.persistence.EntityListeners;
 public class ClientUserWsPlatform {
     @EmbeddedId
     @JsonUnwrapped
-    private ClientUserPk pkId;
+    private ClientUserWsPlatformPk pkId;
 
     @Column(nullable = false)
     @CreatedDate
@@ -40,20 +41,22 @@ public class ClientUserWsPlatform {
     private Long updateTime;
 
     @Column(nullable = false)
-    private String platform;
-
-    @Column(nullable = false)
     private String para;
 
     public static ClientUserWsPlatform newItem(ClientUser cUser, String platform) {
         ClientUserWsPlatform item = new ClientUserWsPlatform();
 
-        item.setPkId(cUser.getPkId());
-        item.setPlatform(platform);
+        ClientUserWsPlatformPk pkId = new ClientUserWsPlatformPk();
+        pkId.setMgUserId(cUser.getPkId().getMgUserId());
+        pkId.setClientUserId(cUser.getPkId().getClientUserId());
+        pkId.setPlatform(platform);
+
+        item.setPkId(pkId);
 
         return item;
     }
 
+    @JsonIgnore
     public void renewPara() {
         String newPara = RandomStringUtils.randomNumeric(10);
         while (StringUtil.hasCtn(para) && newPara.equals(para)) {

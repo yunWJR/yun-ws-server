@@ -5,9 +5,7 @@ import com.yun.yunwsserver.module.wesocket.model.ImWsSessionUser;
 import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
 import com.yun.yunwsserver.module.wesocket.mq.ImRspManager;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ImSession管理，管理所有 session。
@@ -65,6 +63,16 @@ public class ImSessionManager {
         }
 
         return null;
+    }
+
+    public static List<ImWsSessionUser> getSocketUserByUserId(String userId) {
+        ImPlatformSessionManager mg = userSessionMap.get(userId);
+
+        if (mg != null) {
+            return mg.allOnlineUser();
+        }
+
+        return new ArrayList<>();
     }
 
     /**

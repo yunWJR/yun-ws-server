@@ -78,19 +78,20 @@ public class ClientUserServiceImpl extends BaseServiceImpl {
 
         // 关闭当前链接
         // todo
-        imWebSocketService.closeClient(null, platform);
+        imWebSocketService.closeClient(cUser.getSessionId(), platform);
 
         // 生成新链接
         ClientUserWsPlatform newPt = createNewPlatform(cUser, platform);
 
-        return new ClientUserLoginVo(cUser,newPt);
+        return new ClientUserLoginVo(cUser, newPt);
     }
 
     private ClientUserWsPlatform createNewPlatform(ClientUser cUser, String platform) {
         QClientUserWsPlatform qPl = QClientUserWsPlatform.clientUserWsPlatform;
         ClientUserWsPlatform pt = queryFactory.selectFrom(qPl)
-                .where(qPl.pkId.eq(cUser.getPkId())  // todo 测试
-                        .and(qPl.platform.eq(platform)))
+                .where(qPl.pkId.mgUserId.eq(cUser.getPkId().getMgUserId())
+                        .and(qPl.pkId.clientUserId.eq(cUser.getPkId().getClientUserId()))
+                        .and(qPl.pkId.platform.eq(platform)))
                 .fetchFirst();
 
         if (pt == null) {
@@ -145,7 +146,7 @@ public class ClientUserServiceImpl extends BaseServiceImpl {
                 .innerJoin((qPlat))
                 .on(qPlat.pkId.mgUserId.eq(qCU.pkId.mgUserId)
                         .and(qPlat.pkId.clientUserId.eq(qCU.pkId.clientUserId))
-                        .and(qPlat.platform.eq(clientPt))
+                        .and(qPlat.pkId.platform.eq(clientPt))
                         .and(qPlat.para.eq(clientPara)))
                 .fetchFirst();
 

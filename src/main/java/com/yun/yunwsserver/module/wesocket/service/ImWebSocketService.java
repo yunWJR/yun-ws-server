@@ -17,7 +17,9 @@ public interface ImWebSocketService {
 
     void wsCloseOn(ImWsSession session, String platform, String token);
 
-    boolean pushMessage(String userId, String ignorePlatform, WsRspMessage msg);
+    boolean pushMessage(String userId, String platform, WsRspMessage msg);
 
-    void closeClient(Long id, String platform);
+    boolean pushMessage(String userId, WsRspMessage msg);
+
+    void closeClient(String sessionId, String platform);
 }

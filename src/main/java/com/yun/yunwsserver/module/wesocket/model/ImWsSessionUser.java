@@ -63,7 +63,7 @@ public class ImWsSessionUser {
      * 当前用户是否在线
      */
     public boolean isOnline() {
-        return ClientUserStatus.Offline == getStatus();
+        return ClientUserStatus.Online == getStatus();
     }
 
     // endregion

@@ -1,15 +1,11 @@
 package com.yun.yunwsserver.module.wesocket.session;
 
-import com.yun.yunwsserver.module.ClientPlatformType;
 import com.yun.yunwsserver.module.wesocket.model.ClientUserStatus;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSession;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSessionUser;
 import lombok.Data;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 平台的 session 管理
@@ -19,8 +15,6 @@ public class ImPlatformSessionManager {
     //SynchronizedMap类是定义在Collections中的一个静态内部类。它实现了Map接口，并对其中的每一个方法实现，通过synchronized 关键字进行了同步控制
     // Collections.synchronizedMap 返回的是一个线程安全的hashMap(原hashMap为线程不安全的，需要手动在线程中处理，synchronizedMap省去这一步骤)
     private final Map<String, ImWsSessionUser> ptMap = Collections.synchronizedMap(new HashMap<>());
-
-    private ClientPlatformType platformType;
 
     private String userSessionId;
 
@@ -47,6 +41,21 @@ public class ImPlatformSessionManager {
      */
     public ImWsSessionUser getUserByPt(String pt) {
         return ptMap.get(pt);
+    }
+
+    public List<ImWsSessionUser> allOnlineUser() {
+        List<ImWsSessionUser> list = new ArrayList<>();
+
+        for (ImWsSessionUser user : ptMap.values()) {
+            list.add(user);
+
+             // todo
+            // if (user.isOnline()) {
+            //     list.add(user);
+            // }
+        }
+
+        return list;
     }
 
     /**
@@ -131,6 +140,8 @@ public class ImPlatformSessionManager {
 
     public void addUser(String clientPt, String para, ImWsSession session) {
         ImWsSessionUser user = new ImWsSessionUser(clientPt, para, session);
+        user.setStatus(ClientUserStatus.Online);
+        user.setLastHeartDate(new Date());
 
         ptMap.put(clientPt, user);
     }

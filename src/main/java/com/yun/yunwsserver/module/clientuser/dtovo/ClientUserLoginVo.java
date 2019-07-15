@@ -27,7 +27,7 @@ public class ClientUserLoginVo {
         this.sessionId = cUser.getSessionId();
         this.clientUserId = newPt.getPkId().getClientUserId();
         this.para = newPt.getPara();
-        this.platform = newPt.getPlatform();
+        this.platform = newPt.getPkId().getPlatform();
 
         // todo
         this.wsPath = String.format("http://192.168.0.119:7191/im/%s/%s/%s", sessionId, platform, para);
