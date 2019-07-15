@@ -1,9 +1,9 @@
-package com.yun.yunwsserver.module.group.controller;
+package com.yun.yunwsserver.module.conversation.controller;
 
 import com.yun.base.module.Bean.BaseRstBeanT;
-import com.yun.yunwsserver.module.group.dtovo.GroupDto;
-import com.yun.yunwsserver.module.group.dtovo.GroupVo;
-import com.yun.yunwsserver.module.group.service.GroupServiceImpl;
+import com.yun.yunwsserver.module.conversation.dtovo.ConversationDto;
+import com.yun.yunwsserver.module.conversation.dtovo.ConversationVo;
+import com.yun.yunwsserver.module.conversation.service.ConversationServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,17 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping("v1/api/group")
-@Api(tags = "04-00-群组管理")
-public class GroupController {
+@RequestMapping("v1/api/conversation")
+@Api(tags = "04-00-对话管理")
+public class ConversationController {
 
     @Autowired
-    private GroupServiceImpl groupService;
+    private ConversationServiceImpl groupService;
 
-    @PostMapping("creatGroup")
-    @ApiOperation("creatGroup")
-    public BaseRstBeanT<GroupVo> creatGroup(
-            @RequestBody @Valid GroupDto dto) {
+    @PostMapping("creat")
+    @ApiOperation("creat")
+    public BaseRstBeanT<ConversationVo> creat(
+            @RequestBody @Valid ConversationDto dto) {
         return BaseRstBeanT.SurBean(groupService.creatGroup(dto));
 
     }

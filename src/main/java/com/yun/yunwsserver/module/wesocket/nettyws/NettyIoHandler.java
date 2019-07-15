@@ -129,7 +129,7 @@ public class NettyIoHandler extends SimpleChannelInboundHandler<Object> {
         // TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString() + ctx.channel().pkId() + "：" + request);
 
         // 群发
-        // Global.group.writeAndFlush(tws);
+        // Global.conversation.writeAndFlush(tws);
 
         // 返回【谁发的发给谁】
         // ctx.channel().writeAndFlush(tws);

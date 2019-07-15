@@ -1,4 +1,4 @@
-package com.yun.yunwsserver.module.group.entity;
+package com.yun.yunwsserver.module.conversation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -24,11 +24,11 @@ import javax.persistence.EntityListeners;
 @Data
 @NoArgsConstructor
 @ApiModel("用户信息")
-public class GroupUserRl {
+public class ConversationUserRl {
 
     @EmbeddedId
     @JsonUnwrapped
-    private GroupUserRlPk pkId;
+    private ConversationUserRlPk pkId;
 
     @Column(nullable = false)
     @CreatedDate
@@ -44,14 +44,14 @@ public class GroupUserRl {
     @Column
     private String sessionId;
 
-    public GroupUserRl(Long mgUserId, String clientGroupId, String clientUserId) {
-        pkId = new GroupUserRlPk(mgUserId, clientGroupId, clientUserId);
+    public ConversationUserRl(Long mgUserId, String clientGroupId, String clientUserId) {
+        pkId = new ConversationUserRlPk(mgUserId, clientGroupId, clientUserId);
 
         resetSsId();
     }
 
-    public GroupUserRl(Group group, String clientUserId) {
-        pkId = new GroupUserRlPk(group.getPkId().getMgUserId(), group.getPkId().getClientGroupId(), clientUserId);
+    public ConversationUserRl(Conversation conversation, String clientUserId) {
+        pkId = new ConversationUserRlPk(conversation.getPkId().getMgUserId(), conversation.getPkId().getClientGroupId(), clientUserId);
 
         resetSsId();
     }

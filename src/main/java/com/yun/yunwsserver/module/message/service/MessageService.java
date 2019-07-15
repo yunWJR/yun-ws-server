@@ -1,7 +1,7 @@
 package com.yun.yunwsserver.module.message.service;
 
 import com.yun.yunwsserver.module.BaseServiceImpl;
-import com.yun.yunwsserver.module.group.entity.QGroupUserRl;
+import com.yun.yunwsserver.module.conversation.entity.QGroupUserRl;
 import com.yun.yunwsserver.module.message.dtovo.MessageDto;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import com.yun.yunwsserver.module.wesocket.model.WsRspMessage;

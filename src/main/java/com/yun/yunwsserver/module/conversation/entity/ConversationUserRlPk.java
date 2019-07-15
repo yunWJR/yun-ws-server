@@ -1,9 +1,5 @@
-package com.yun.yunwsserver.module.group.entity;
+package com.yun.yunwsserver.module.conversation.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.yun.base.IdGenerator.LongJson.LongJsonDeserializer;
-import com.yun.base.IdGenerator.LongJson.LongJsonSerializer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -18,7 +14,7 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class GroupUserRlPk implements Serializable {
+public class ConversationUserRlPk implements Serializable {
 
     // region --Field
 
@@ -37,10 +33,10 @@ public class GroupUserRlPk implements Serializable {
 
     // region --Constructor
 
-    public GroupUserRlPk() {
+    public ConversationUserRlPk() {
     }
 
-    public GroupUserRlPk(Long mgUserId, String clientGroupId,String clientUserId) {
+    public ConversationUserRlPk(Long mgUserId, String clientGroupId, String clientUserId) {
         this.mgUserId = mgUserId;
         this.clientGroupId = clientGroupId;
         this.clientUserId = clientUserId;

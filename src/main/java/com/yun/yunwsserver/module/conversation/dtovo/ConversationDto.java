@@ -1,4 +1,4 @@
-package com.yun.yunwsserver.module.group.dtovo;
+package com.yun.yunwsserver.module.conversation.dtovo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class GroupDto {
+public class ConversationDto {
     @NotBlank
     @Length(max = 200)
     private String clientGroupId;

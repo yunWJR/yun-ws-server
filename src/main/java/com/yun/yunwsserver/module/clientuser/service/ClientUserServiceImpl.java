@@ -83,7 +83,7 @@ public class ClientUserServiceImpl extends BaseServiceImpl {
         // 生成新链接
         ClientUserWsPlatform newPt = createNewPlatform(cUser, platform);
 
-        return new ClientUserLoginVo(newPt);
+        return new ClientUserLoginVo(cUser,newPt);
     }
 
     private ClientUserWsPlatform createNewPlatform(ClientUser cUser, String platform) {

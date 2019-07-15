@@ -1,5 +1,6 @@
 package com.yun.yunwsserver.module.clientuser.dtovo;
 
+import com.yun.yunwsserver.module.clientuser.entity.ClientUser;
 import com.yun.yunwsserver.module.clientuser.entity.ClientUserWsPlatform;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,9 +19,17 @@ public class ClientUserLoginVo {
 
     private String para;
 
-    public ClientUserLoginVo(ClientUserWsPlatform newPt) {
+    private String sessionId;
+
+    private String wsPath;
+
+    public ClientUserLoginVo(ClientUser cUser, ClientUserWsPlatform newPt) {
+        this.sessionId = cUser.getSessionId();
         this.clientUserId = newPt.getPkId().getClientUserId();
         this.para = newPt.getPara();
         this.platform = newPt.getPlatform();
+
+        // todo
+        this.wsPath = String.format("http://192.168.0.119:7191/im/%s/%s/%s", sessionId, platform, para);
     }
 }

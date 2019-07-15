@@ -1,7 +1,7 @@
-package com.yun.yunwsserver.module.group.entity;
+package com.yun.yunwsserver.module.conversation.entity;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.yun.yunwsserver.module.group.dtovo.GroupDto;
+import com.yun.yunwsserver.module.conversation.dtovo.ConversationDto;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -24,11 +24,11 @@ import javax.persistence.EntityListeners;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
-@ApiModel("")
-public class Group {
+@ApiModel("群组")
+public class Conversation {
     @EmbeddedId
     @JsonUnwrapped
-    private GroupPk pkId;
+    private ConversationPk pkId;
 
     @Column(nullable = false)
     @CreatedDate
@@ -41,19 +41,15 @@ public class Group {
     @Column
     private String remark;
 
-
-
-    public Group(Long mgUserId, String clientGroupId) {
-        pkId = new GroupPk(mgUserId, clientGroupId);
+    public Conversation(Long mgUserId, String clientGroupId) {
+        pkId = new ConversationPk(mgUserId, clientGroupId);
     }
 
-    public static Group newItem(MgUser mgUser, GroupDto dto) {
-        Group group = new Group(mgUser.getId(), dto.getClientGroupId());
+    public static Conversation newItem(MgUser mgUser, ConversationDto dto) {
+        Conversation conversation = new Conversation(mgUser.getId(), dto.getClientGroupId());
 
-        group.setRemark(dto.getRemark());
+        conversation.setRemark(dto.getRemark());
 
-
-
-        return group;
+        return conversation;
     }
 }

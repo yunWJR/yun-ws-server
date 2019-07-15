@@ -1,10 +1,10 @@
-package com.yun.yunwsserver.module.group.service;
+package com.yun.yunwsserver.module.conversation.service;
 
 import com.yun.base.Util.StringUtil;
 import com.yun.yunwsserver.module.BaseServiceImpl;
-import com.yun.yunwsserver.module.group.dtovo.GroupDto;
-import com.yun.yunwsserver.module.group.dtovo.GroupVo;
-import com.yun.yunwsserver.module.group.entity.*;
+import com.yun.yunwsserver.module.conversation.dtovo.ConversationDto;
+import com.yun.yunwsserver.module.conversation.dtovo.ConversationVo;
+import com.yun.yunwsserver.module.conversation.entity.*;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import com.yun.yunwsserver.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,33 +20,33 @@ import java.util.List;
  */
 
 @Service
-public class GroupServiceImpl extends BaseServiceImpl {
+public class ConversationServiceImpl extends BaseServiceImpl {
     @Autowired
-    private GroupJrp groupJrp;
+    private ConversationJrp groupJrp;
 
     @Autowired
-    private GroupUserRlJrp userRlJrp;
+    private ConversationUserRlJrp userRlJrp;
 
     @Transactional
-    public GroupVo creatGroup(GroupDto dto) {
+    public ConversationVo creatGroup(ConversationDto dto) {
         MgUser mgUser = RequestUtil.getAccessUser();
 
-        Group group = getValidClientUser(dto.getClientGroupId(), false);
-        if (group != null) {
+        Conversation conversation = getValidClientUser(dto.getClientGroupId(), false);
+        if (conversation != null) {
             throwCommonError("群组已存在");
 
             return null;
         }
 
-        group = Group.newItem(mgUser, dto);
-        groupJrp.save(group);
+        conversation = Conversation.newItem(mgUser, dto);
+        groupJrp.save(conversation);
 
-        List<GroupUserRl> addUserList = new ArrayList<>();
+        List<ConversationUserRl> addUserList = new ArrayList<>();
         // 保存人员
         if (dto.getClientUserId() != null) {
 
             for (String cId : dto.getClientUserId()) {
-                addUserList.add(new GroupUserRl(group, cId));
+                addUserList.add(new ConversationUserRl(conversation, cId));
             }
 
             if (addUserList.size() > 0) {
@@ -54,32 +54,32 @@ public class GroupServiceImpl extends BaseServiceImpl {
             }
         }
 
-        GroupVo vo = new GroupVo(group, addUserList);
+        ConversationVo vo = new ConversationVo(conversation, addUserList);
 
         return vo;
     }
 
     @Transactional
-    public GroupVo groupInfo(String clientGroupId) {
+    public ConversationVo groupInfo(String clientGroupId) {
 
-        Group group = getValidClientUser(clientGroupId);
+        Conversation conversation = getValidClientUser(clientGroupId);
 
         QGroupUserRl qGu = QGroupUserRl.groupUserRl;
-        List<GroupUserRl> rlList = queryFactory.selectFrom(qGu)
-                .where(qGu.pkId.mgUserId.eq(group.getPkId().getMgUserId())
-                        .and(qGu.pkId.clientGroupId.eq(group.getPkId().getClientGroupId())))
+        List<ConversationUserRl> rlList = queryFactory.selectFrom(qGu)
+                .where(qGu.pkId.mgUserId.eq(conversation.getPkId().getMgUserId())
+                        .and(qGu.pkId.clientGroupId.eq(conversation.getPkId().getClientGroupId())))
                 .fetch();
 
-        GroupVo vo = new GroupVo(group, rlList);
+        ConversationVo vo = new ConversationVo(conversation, rlList);
 
         return vo;
     }
 
-    private Group getValidClientUser(String remarkId) {
+    private Conversation getValidClientUser(String remarkId) {
         return getValidClientUser(remarkId, true);
     }
 
-    private Group getValidClientUser(String remarkId, boolean throEp) {
+    private Conversation getValidClientUser(String remarkId, boolean throEp) {
         if (StringUtil.isNullOrEmpty(remarkId)) {
             if (throEp) {
                 throwCommonError("参数错误");
@@ -90,12 +90,12 @@ public class GroupServiceImpl extends BaseServiceImpl {
 
         MgUser mgUser = RequestUtil.getAccessUser();
         QGroup qGroup = QGroup.group;
-        Group group = queryFactory.selectFrom(qGroup)
+        Conversation conversation = queryFactory.select(qGroup).from(qGroup)
                 .where(qGroup.pkId.mgUserId.eq(mgUser.getId())
                         .and(qGroup.pkId.clientGroupId.eq(remarkId)))
                 .fetchFirst();
 
-        if (group == null) {
+        if (conversation == null) {
             if (throEp) {
                 throwCommonError("群组不存在");
             }
@@ -103,6 +103,6 @@ public class GroupServiceImpl extends BaseServiceImpl {
             return null;
         }
 
-        return group;
+        return conversation;
     }
 }

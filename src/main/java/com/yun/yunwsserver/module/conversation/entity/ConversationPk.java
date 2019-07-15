@@ -1,4 +1,4 @@
-package com.yun.yunwsserver.module.group.entity;
+package com.yun.yunwsserver.module.conversation.entity;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class GroupPk implements Serializable {
+public class ConversationPk implements Serializable {
 
     // region --Field
 
@@ -29,10 +29,10 @@ public class GroupPk implements Serializable {
 
     // region --Constructor
 
-    public GroupPk() {
+    public ConversationPk() {
     }
 
-    public GroupPk(Long mgUserId, String clientGroupId) {
+    public ConversationPk(Long mgUserId, String clientGroupId) {
         this.mgUserId = mgUserId;
         this.clientGroupId = clientGroupId;
     }
