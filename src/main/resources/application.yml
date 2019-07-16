@@ -45,3 +45,8 @@ spring:
         login-password: skkj123
         allow: "*"
         deny:
+
+
+ws:
+  ws-endpoint: skkjws
+  ws-host: http://192.168.0.119:7191

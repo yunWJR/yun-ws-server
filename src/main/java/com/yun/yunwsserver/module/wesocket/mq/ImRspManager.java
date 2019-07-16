@@ -4,7 +4,7 @@ import com.yun.yunwsserver.config.SpringContextUtil;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSession;
 import com.yun.yunwsserver.module.wesocket.model.WsClientMessageDto;
 import com.yun.yunwsserver.module.wesocket.model.WsRspMessage;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
+import com.yun.yunwsserver.module.wesocket.model.WsRspMessageType;
 import com.yun.yunwsserver.module.wesocket.mq.dispatch.ImDispatchTask;
 import com.yun.yunwsserver.module.wesocket.mq.dispatch.ImDispatcher;
 

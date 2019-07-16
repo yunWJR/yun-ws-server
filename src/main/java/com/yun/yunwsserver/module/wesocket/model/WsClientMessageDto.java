@@ -1,7 +1,6 @@
 package com.yun.yunwsserver.module.wesocket.model;
 
 import com.yun.yunwsserver.module.ClientPlatformType;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsClientMessageType;
 import lombok.Data;
 
 /**

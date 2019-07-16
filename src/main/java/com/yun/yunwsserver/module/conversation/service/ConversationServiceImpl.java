@@ -2,6 +2,8 @@ package com.yun.yunwsserver.module.conversation.service;
 
 import com.yun.base.Util.StringUtil;
 import com.yun.yunwsserver.module.BaseServiceImpl;
+import com.yun.yunwsserver.module.clientuser.entity.ClientUser;
+import com.yun.yunwsserver.module.clientuser.entity.QClientUser;
 import com.yun.yunwsserver.module.conversation.dtovo.ConversationDto;
 import com.yun.yunwsserver.module.conversation.dtovo.ConversationVo;
 import com.yun.yunwsserver.module.conversation.entity.*;
@@ -31,7 +33,7 @@ public class ConversationServiceImpl extends BaseServiceImpl {
     public ConversationVo creatGroup(ConversationDto dto) {
         MgUser mgUser = RequestUtil.getAccessUser();
 
-        Conversation conversation = getValidClientUser(dto.getClientGroupId(), false);
+        Conversation conversation = getValidClientUser(dto.getExtraCvsId(), false);
         if (conversation != null) {
             throwCommonError("群组已存在");
 
@@ -43,9 +45,13 @@ public class ConversationServiceImpl extends BaseServiceImpl {
 
         List<ConversationUserRl> addUserList = new ArrayList<>();
         // 保存人员
-        if (dto.getClientUserId() != null) {
+        if (dto.getExtraUserId() != null) {
+            QClientUser qCUser = QClientUser.clientUser;
+            List<ClientUser> clientUsers = queryFactory.selectFrom(qCUser)
+                    .where(qCUser.extraUserId.in(dto.getExtraUserId()))
+                    .fetch();
 
-            for (String cId : dto.getClientUserId()) {
+            for (ClientUser cId : clientUsers) {
                 addUserList.add(new ConversationUserRl(conversation, cId));
             }
 
@@ -59,28 +65,8 @@ public class ConversationServiceImpl extends BaseServiceImpl {
         return vo;
     }
 
-    @Transactional
-    public ConversationVo groupInfo(String clientGroupId) {
-
-        Conversation conversation = getValidClientUser(clientGroupId);
-
-        QGroupUserRl qGu = QGroupUserRl.groupUserRl;
-        List<ConversationUserRl> rlList = queryFactory.selectFrom(qGu)
-                .where(qGu.pkId.mgUserId.eq(conversation.getPkId().getMgUserId())
-                        .and(qGu.pkId.clientGroupId.eq(conversation.getPkId().getClientGroupId())))
-                .fetch();
-
-        ConversationVo vo = new ConversationVo(conversation, rlList);
-
-        return vo;
-    }
-
-    private Conversation getValidClientUser(String remarkId) {
-        return getValidClientUser(remarkId, true);
-    }
-
-    private Conversation getValidClientUser(String remarkId, boolean throEp) {
-        if (StringUtil.isNullOrEmpty(remarkId)) {
+    private Conversation getValidClientUser(String extraCvsId, boolean throEp) {
+        if (StringUtil.isNullOrEmpty(extraCvsId)) {
             if (throEp) {
                 throwCommonError("参数错误");
             }
@@ -89,10 +75,10 @@ public class ConversationServiceImpl extends BaseServiceImpl {
         }
 
         MgUser mgUser = RequestUtil.getAccessUser();
-        QGroup qGroup = QGroup.group;
-        Conversation conversation = queryFactory.select(qGroup).from(qGroup)
-                .where(qGroup.pkId.mgUserId.eq(mgUser.getId())
-                        .and(qGroup.pkId.clientGroupId.eq(remarkId)))
+        QConversation qCv = QConversation.conversation;
+        Conversation conversation = queryFactory.select(qCv).from(qCv)
+                .where(qCv.mgUserId.eq(mgUser.getId())
+                        .and(qCv.extraCvsId.eq(extraCvsId)))
                 .fetchFirst();
 
         if (conversation == null) {

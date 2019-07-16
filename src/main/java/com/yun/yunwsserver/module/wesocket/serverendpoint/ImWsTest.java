@@ -1,15 +1,14 @@
 package com.yun.yunwsserver.module.wesocket.serverendpoint;
 
-import com.yun.yunwsserver.util.JsonHelper;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSessionUser;
 import com.yun.yunwsserver.module.wesocket.session.ImSessionManager;
+import com.yun.yunwsserver.util.JsonHelper;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,8 +48,8 @@ public class ImWsTest {
     public void close(Session session) {
         ImWsSessionUser su = ImSessionManager.getSocketUserBySessionId(session.getId());
         if (su != null) {
-             // todo
-            // su.setStatus(ClientUserStatus.Offline);
+            // todo
+            // su.setStatus(ClientUserStatusType.Offline);
             System.out.println("WeSocket关闭： 用户：" + su.getClientPt() + " 掉线");
         }
     }

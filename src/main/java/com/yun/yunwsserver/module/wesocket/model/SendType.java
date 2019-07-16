@@ -1,4 +1,4 @@
-package com.yun.yunwsserver.module.wesocket.model.enumtype;
+package com.yun.yunwsserver.module.wesocket.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

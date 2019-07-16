@@ -16,12 +16,15 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ConversationVo {
+    private Long id;
+
     @JsonUnwrapped
     private Conversation conversation;
 
     private List<ConversationUserRl> userList;
 
     public ConversationVo(Conversation conversation, List<ConversationUserRl> userList) {
+        this.id = conversation.getId();
         this.conversation = conversation;
         this.userList = userList;
     }

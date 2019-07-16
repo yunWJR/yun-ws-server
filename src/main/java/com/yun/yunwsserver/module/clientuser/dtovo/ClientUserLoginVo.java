@@ -1,5 +1,6 @@
 package com.yun.yunwsserver.module.clientuser.dtovo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yun.yunwsserver.module.clientuser.entity.ClientUser;
 import com.yun.yunwsserver.module.clientuser.entity.ClientUserWsPlatform;
 import lombok.Data;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ClientUserLoginVo {
-    private String clientUserId;
+    private Long id;
+
+    private String extraUserId;
 
     private String platform;
 
@@ -24,12 +27,19 @@ public class ClientUserLoginVo {
     private String wsPath;
 
     public ClientUserLoginVo(ClientUser cUser, ClientUserWsPlatform newPt) {
+        this.id = cUser.getId();
         this.sessionId = cUser.getSessionId();
-        this.clientUserId = newPt.getPkId().getClientUserId();
+        this.extraUserId = newPt.getExtraUserId();
         this.para = newPt.getPara();
-        this.platform = newPt.getPkId().getPlatform();
+        this.platform = newPt.getPlatform();
+    }
 
-        // todo
-        this.wsPath = String.format("http://192.168.0.119:7191/im/%s/%s/%s", sessionId, platform, para);
+    @JsonIgnore
+    public void creatPath(String host, String endpoint) {
+        if (host == null || endpoint == null) {
+            return;
+        }
+
+        this.wsPath = String.format("%s/%s/%s/%s/%s", host, endpoint, sessionId, platform, para);
     }
 }

@@ -1,6 +1,6 @@
 package com.yun.yunwsserver.module.wesocket.session;
 
-import com.yun.yunwsserver.module.wesocket.model.ClientUserStatus;
+import com.yun.yunwsserver.module.wesocket.model.ClientUserStatusType;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSession;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSessionUser;
 import lombok.Data;
@@ -49,7 +49,7 @@ public class ImPlatformSessionManager {
         for (ImWsSessionUser user : ptMap.values()) {
             list.add(user);
 
-             // todo
+            // todo
             // if (user.isOnline()) {
             //     list.add(user);
             // }
@@ -84,7 +84,7 @@ public class ImPlatformSessionManager {
         for (String key : ptMap.keySet()) {
             ImWsSessionUser user = ptMap.get(key);
             if (user != null) {
-                if (user.getStatus() == ClientUserStatus.Hide || user.getStatus() == ClientUserStatus.Online) {
+                if (user.getStatus() == ClientUserStatusType.Hide || user.getStatus() == ClientUserStatusType.Online) {
                     count++;
                 }
             }
@@ -140,7 +140,7 @@ public class ImPlatformSessionManager {
 
     public void addUser(String clientPt, String para, ImWsSession session) {
         ImWsSessionUser user = new ImWsSessionUser(clientPt, para, session);
-        user.setStatus(ClientUserStatus.Online);
+        user.setStatus(ClientUserStatusType.Online);
         user.setLastHeartDate(new Date());
 
         ptMap.put(clientPt, user);

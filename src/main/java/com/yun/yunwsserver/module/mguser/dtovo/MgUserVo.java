@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserVO {
+public class MgUserVo {
     private Long id;
 
     private Long createTime;
@@ -25,7 +25,7 @@ public class UserVO {
 
     private String secretKey;
 
-    public UserVO(MgUser mgUser) {
+    public MgUserVo(MgUser mgUser) {
         this.id = mgUser.getId();
         this.createTime = mgUser.getCreateTime();
         this.info = mgUser.getInfo();

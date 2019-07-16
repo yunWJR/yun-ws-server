@@ -2,8 +2,8 @@ package com.yun.yunwsserver.module.mguser.controller;
 
 import com.yun.base.module.Bean.BaseRstBeanT;
 import com.yun.yunwsserver.config.NoNeedAccessAuthentication;
-import com.yun.yunwsserver.module.mguser.dtovo.UserAccDto;
-import com.yun.yunwsserver.module.mguser.dtovo.UserVO;
+import com.yun.yunwsserver.module.mguser.dtovo.MgUserAccDto;
+import com.yun.yunwsserver.module.mguser.dtovo.MgUserVo;
 import com.yun.yunwsserver.module.mguser.service.LoginServiceImp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ public class LoginController {
     @ApiOperation("注册")
     @NoNeedAccessAuthentication
     public BaseRstBeanT<String> register(
-            @RequestBody @Valid UserAccDto dto
+            @RequestBody @Valid MgUserAccDto dto
     ) {
         loginServiceImp.register(dto);
         return BaseRstBeanT.SurBean("注册成功");
@@ -41,8 +41,8 @@ public class LoginController {
     @PostMapping("login")
     @ApiOperation("登录")
     @NoNeedAccessAuthentication
-    public BaseRstBeanT<UserVO> login(
-            @RequestBody @Valid UserAccDto dto
+    public BaseRstBeanT<MgUserVo> login(
+            @RequestBody @Valid MgUserAccDto dto
     ) {
         return BaseRstBeanT.SurBean(loginServiceImp.login(dto));
     }

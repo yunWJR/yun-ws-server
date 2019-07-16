@@ -2,12 +2,10 @@ package com.yun.yunwsserver.module.message.dtovo;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.yun.base.Util.StringUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
@@ -19,18 +17,30 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class MessageDto {
-    @NotBlank
-    @Length(max = 200)
-    private String clientGroupId;
+    private Long conversationId;
+
+    private String extraConversationId;
 
     private String contentJson;
 
-    private Map content;
+    private String contentString;
+
+    private Object content;
 
     private List<IgnoreUserPlatformDto> ignoreList;
 
     @JsonIgnore
     public void reform() {
-        content = (Map) JSON.parse(contentJson);
+        if (StringUtil.hasCtn(contentJson)) {
+            content = (Map) JSON.parse(contentJson);
+
+            contentJson = null;
+        }
+
+        if (StringUtil.hasCtn(contentString)) {
+            content = contentString;
+
+            contentString = null;
+        }
     }
 }

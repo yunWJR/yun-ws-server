@@ -1,7 +1,5 @@
 package com.yun.yunwsserver.config;
 
-import com.yun.base.Util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

@@ -3,7 +3,6 @@ package com.yun.yunwsserver.module.wesocket.service;
 import com.yun.yunwsserver.module.clientuser.service.ClientUserServiceImpl;
 import com.yun.yunwsserver.module.message.service.MessageService;
 import com.yun.yunwsserver.module.wesocket.model.*;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
 import com.yun.yunwsserver.module.wesocket.mq.ImRspManager;
 import com.yun.yunwsserver.module.wesocket.session.ImSessionManager;
 import com.yun.yunwsserver.util.JsonHelper;
@@ -104,7 +103,7 @@ public class ImWebSocketServiceImpl implements ImWebSocketService {
 
         ImWsSessionUser su = ImSessionManager.getSocketUserBySessionId(session.getId());
         if (su != null) {
-            su.setStatus(ClientUserStatus.Offline);
+            su.setStatus(ClientUserStatusType.Offline);
             print("用户:" + su.getClientPt() + "  掉线");
         }
 

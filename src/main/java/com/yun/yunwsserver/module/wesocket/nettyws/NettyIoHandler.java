@@ -1,6 +1,7 @@
 package com.yun.yunwsserver.module.wesocket.nettyws;
 
 import com.yun.yunwsserver.config.SpringContextUtil;
+import com.yun.yunwsserver.config.WsProperties;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSession;
 import com.yun.yunwsserver.module.wesocket.nettyws.session.NettySession;
 import com.yun.yunwsserver.module.wesocket.service.ImWebSocketService;
@@ -26,6 +27,8 @@ public class NettyIoHandler extends SimpleChannelInboundHandler<Object> {
      * 需要手动注入
      */
     private ImWebSocketService imService;
+
+    private WsProperties wsProperties;
 
     private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, DefaultFullHttpResponse res) {
         // 返回应答给客户端
@@ -224,7 +227,7 @@ public class NettyIoHandler extends SimpleChannelInboundHandler<Object> {
             }
 
             // 端点检查
-            if (!"im".equals(para[1])) {
+            if (!getWsProperties().getWsEndpoint().equals(para[1])) {
                 return;
             }
 
@@ -247,5 +250,13 @@ public class NettyIoHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         return imService;
+    }
+
+    private WsProperties getWsProperties() {
+        if (wsProperties == null) {
+            wsProperties = SpringContextUtil.getBean(WsProperties.class);
+        }
+
+        return wsProperties;
     }
 }

@@ -1,21 +1,17 @@
 package com.yun.yunwsserver.module.clientuser.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.yun.base.Util.StringUtil;
-import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
+import javax.persistence.*;
 
 /**
  * @author: yun
@@ -23,14 +19,16 @@ import javax.persistence.EntityListeners;
  */
 
 @Entity
+@Table(name = "ClientUserWsPlatform", uniqueConstraints = {
+        @UniqueConstraint(name = "clientUser_platform", columnNames = {"extraUserId", "platform"})})
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
 @ApiModel("")
 public class ClientUserWsPlatform {
-    @EmbeddedId
-    @JsonUnwrapped
-    private ClientUserWsPlatformPk pkId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     @CreatedDate
@@ -41,17 +39,28 @@ public class ClientUserWsPlatform {
     private Long updateTime;
 
     @Column(nullable = false)
+    private Long mgUserId;
+
+    @Column(nullable = false)
+    @Length(max = 200)
+    private String extraUserId;
+
+    @Column(nullable = false)
+    private Long clientUserId;
+
+    @Column(nullable = false)
+    private String platform;
+
+    @Column(nullable = false)
     private String para;
 
     public static ClientUserWsPlatform newItem(ClientUser cUser, String platform) {
         ClientUserWsPlatform item = new ClientUserWsPlatform();
 
-        ClientUserWsPlatformPk pkId = new ClientUserWsPlatformPk();
-        pkId.setMgUserId(cUser.getPkId().getMgUserId());
-        pkId.setClientUserId(cUser.getPkId().getClientUserId());
-        pkId.setPlatform(platform);
-
-        item.setPkId(pkId);
+        item.setClientUserId(cUser.getId());
+        item.setMgUserId(cUser.getMgUserId());
+        item.setExtraUserId(cUser.getExtraUserId());
+        item.setPlatform(platform);
 
         return item;
     }

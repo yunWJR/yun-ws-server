@@ -1,8 +1,8 @@
 package com.yun.yunwsserver.module.mguser.service;
 
 import com.yun.yunwsserver.module.BaseServiceImpl;
-import com.yun.yunwsserver.module.mguser.dtovo.UserAccDto;
-import com.yun.yunwsserver.module.mguser.dtovo.UserVO;
+import com.yun.yunwsserver.module.mguser.dtovo.MgUserAccDto;
+import com.yun.yunwsserver.module.mguser.dtovo.MgUserVo;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import com.yun.yunwsserver.module.mguser.entity.MgUserJrp;
 import com.yun.yunwsserver.module.mguser.entity.QMgUser;
@@ -23,7 +23,7 @@ public class LoginServiceImp extends BaseServiceImpl {
     private MgUserJrp mgUserJrp;
 
     @Transactional
-    public void register(UserAccDto dto) {
+    public void register(MgUserAccDto dto) {
         if (mgUserJrp.existsByInfo_AcctName(dto.getAcctName())) {
             throwCommonError("用户名已存在");
         }
@@ -33,7 +33,7 @@ public class LoginServiceImp extends BaseServiceImpl {
     }
 
     @Transactional
-    public UserVO login(UserAccDto dto) {
+    public MgUserVo login(MgUserAccDto dto) {
         QMgUser qMgUser = QMgUser.mgUser;
 
         MgUser mgUser = queryFactory.selectFrom(qMgUser)
@@ -45,7 +45,7 @@ public class LoginServiceImp extends BaseServiceImpl {
             throwCommonError("用户不存在");
         }
 
-        return new UserVO(mgUser);
+        return new MgUserVo(mgUser);
     }
 
     public MgUser checkTokenUser(String tokenStr, HttpServletRequest request) {

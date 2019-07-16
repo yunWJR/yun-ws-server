@@ -1,11 +1,5 @@
 package com.yun.yunwsserver.config.authtoken;
 
-import com.yun.base.token.AuthTokenParam;
-import com.yun.base.token.AuthTokenUtil;
-import com.yun.base.token.EnableAuthToken;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 /**
  * The itemType Auth token config.
  * @author: yun

@@ -1,7 +1,6 @@
 package com.yun.yunwsserver.module.wesocket.model;
 
 import com.yun.yunwsserver.util.JsonHelper;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
 import lombok.Data;
 
 /**

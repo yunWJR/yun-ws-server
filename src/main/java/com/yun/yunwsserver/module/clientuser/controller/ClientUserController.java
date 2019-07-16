@@ -19,38 +19,37 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("v1/api/clientUser")
-@Api(tags = "03-00-用户组管理")
+@Api(tags = "03-00-客户端用户管理")
 public class ClientUserController {
 
     @Autowired
     private ClientUserServiceImpl clientUserService;
 
-    @PostMapping("addClientUser")
-    @ApiOperation("addClientUser")
+    @PostMapping("add")
+    @ApiOperation("add")
     public BaseRstBeanT<ClientUserVo> addClientUser(
             @RequestBody @Valid ClientUserDto dto) {
         return BaseRstBeanT.SurBean(clientUserService.addClientUser(dto));
-
     }
 
-    @GetMapping("clientUserInfo/{clientId}")
-    @ApiOperation("clientUserInfo")
-    public BaseRstBeanT<ClientUserVo> clientUserInfo(@PathVariable String clientId) {
-        return BaseRstBeanT.SurBean(clientUserService.clientUserInfo(clientId));
+    @GetMapping("info/{extraUserId}")
+    @ApiOperation("info")
+    public BaseRstBeanT<ClientUserVo> clientUserInfo(@PathVariable String extraUserId) {
+        return BaseRstBeanT.SurBean(clientUserService.clientUserInfo(extraUserId));
     }
 
-    @PostMapping("removeClientUser/{clientId}")
-    @ApiOperation("removeClientUser")
-    public BaseRstBeanT<String> removeClientUser(@PathVariable String clientId) {
-        clientUserService.removeClientUser(clientId);
+    @DeleteMapping("delete/{extraUserId}")
+    @ApiOperation("delete")
+    public BaseRstBeanT<String> removeClientUser(@PathVariable String extraUserId) {
+        clientUserService.removeClientUser(extraUserId);
         return BaseRstBeanT.SurBean("成功");
     }
 
-    @PostMapping("clientUserLogin/{clientId}/{platform}")
-    @ApiOperation("clientUserLogin")
+    @PostMapping("login/{extraUserId}/{platform}")
+    @ApiOperation("login")
     public BaseRstBeanT<ClientUserLoginVo> clientUserLogin(
-            @PathVariable String clientId,
+            @PathVariable String extraUserId,
             @PathVariable String platform) {
-        return BaseRstBeanT.SurBean(clientUserService.clientUserLogin(clientId, platform));
+        return BaseRstBeanT.SurBean(clientUserService.clientUserLogin(extraUserId, platform));
     }
 }

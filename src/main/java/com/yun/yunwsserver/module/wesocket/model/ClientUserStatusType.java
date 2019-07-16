@@ -5,7 +5,7 @@ package com.yun.yunwsserver.module.wesocket.model;
  * @createdOn: 2019-07-12 14:03.
  */
 
-public enum ClientUserStatus {
+public enum ClientUserStatusType {
     /**
      *
      */
@@ -15,7 +15,7 @@ public enum ClientUserStatus {
 
     private final int status;
 
-    private ClientUserStatus(int status) {
+    private ClientUserStatusType(int status) {
         this.status = status;
     }
 

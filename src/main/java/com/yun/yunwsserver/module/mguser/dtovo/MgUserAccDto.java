@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
-public class UserAccDto {
+public class MgUserAccDto {
 
     @NotBlank
     @Length(min = 6, max = 40) // MD5 32位小写

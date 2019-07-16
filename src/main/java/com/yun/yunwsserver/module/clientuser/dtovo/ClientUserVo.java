@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ClientUserVo {
-    private String clientUserId;
+    private Long id;
+
+    private String extraUserId;
 
     private Long createTime;
 
@@ -21,7 +23,8 @@ public class ClientUserVo {
     private String remark;
 
     public ClientUserVo(ClientUser cUser) {
-        this.clientUserId = cUser.getPkId().getClientUserId();
+        this.id = cUser.getId();
+        this.extraUserId = cUser.getExtraUserId();
         this.createTime = cUser.getCreateTime();
         this.updateTime = cUser.getUpdateTime();
         this.remark = cUser.getRemark();

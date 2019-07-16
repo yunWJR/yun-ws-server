@@ -18,7 +18,7 @@ public class ImWsSessionUser {
     private ImWsSession session;
 
     /**
-     * clientUserId
+     * extraUserId
      */
     private String clientPt;
 
@@ -30,7 +30,7 @@ public class ImWsSessionUser {
     /**
      * 用户状态
      */
-    private ClientUserStatus status = ClientUserStatus.Offline;
+    private ClientUserStatusType status = ClientUserStatusType.Offline;
 
     /**
      * 在调度时，是否关闭 session
@@ -63,7 +63,7 @@ public class ImWsSessionUser {
      * 当前用户是否在线
      */
     public boolean isOnline() {
-        return ClientUserStatus.Online == getStatus();
+        return ClientUserStatusType.Online == getStatus();
     }
 
     // endregion

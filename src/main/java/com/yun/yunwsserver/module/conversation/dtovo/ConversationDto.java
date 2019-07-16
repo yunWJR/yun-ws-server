@@ -17,9 +17,9 @@ import java.util.List;
 public class ConversationDto {
     @NotBlank
     @Length(max = 200)
-    private String clientGroupId;
+    private String extraCvsId;
 
-    private List<String> clientUserId;
+    private List<String> extraUserId;
 
     private String remark;
 }

@@ -24,7 +24,7 @@ public class MgUserInfo {
     @ApiModelProperty("是否启用:0-否，1-是")
     private Integer enabled = 0;
 
-    @Column(unique = true, nullable = false, length = 16) // 不重复,不能更改
+    @Column(unique = true, nullable = false, length = 16)
     @NotEmpty
     @Length(min = 8, max = 16)
     @ApiModelProperty("用户名（8-16）-不能更改")

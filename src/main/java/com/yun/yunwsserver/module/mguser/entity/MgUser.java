@@ -2,7 +2,8 @@ package com.yun.yunwsserver.module.mguser.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yun.yunwsserver.module.mguser.dtovo.UserAccDto;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.yun.yunwsserver.module.mguser.dtovo.MgUserAccDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,7 +41,7 @@ public class MgUser {
     private Long updateTime;
 
     @Embedded
-    // @JsonUnwrapped
+    @JsonUnwrapped
     private MgUserInfo info;
 
     @Column(nullable = false)
@@ -62,7 +63,7 @@ public class MgUser {
     @Column
     private String loginToken;
 
-    public static MgUser newUser(UserAccDto dto) {
+    public static MgUser newUser(MgUserAccDto dto) {
         MgUser user = new MgUser();
         user.setPassword(dto.getPassword());
         user.setInfo(new MgUserInfo());

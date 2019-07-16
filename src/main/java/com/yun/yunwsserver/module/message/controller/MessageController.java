@@ -26,8 +26,8 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @PostMapping("pushMessage")
-    @ApiOperation("pushMessage")
+    @PostMapping("push")
+    @ApiOperation("push")
     public BaseRstBeanT<String> pushMessage(
             @RequestBody @Valid MessageDto dto) {
         messageService.pushMessage(dto);

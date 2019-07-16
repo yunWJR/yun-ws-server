@@ -2,7 +2,7 @@ package com.yun.yunwsserver.module.wesocket.session;
 
 import com.yun.yunwsserver.module.wesocket.model.ImWsSession;
 import com.yun.yunwsserver.module.wesocket.model.ImWsSessionUser;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
+import com.yun.yunwsserver.module.wesocket.model.WsRspMessageType;
 import com.yun.yunwsserver.module.wesocket.mq.ImRspManager;
 
 import java.util.*;

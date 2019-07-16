@@ -1,11 +1,11 @@
 package com.yun.yunwsserver.module.message.service;
 
 import com.yun.yunwsserver.module.BaseServiceImpl;
-import com.yun.yunwsserver.module.conversation.entity.QGroupUserRl;
+import com.yun.yunwsserver.module.conversation.entity.QConversationUserRl;
 import com.yun.yunwsserver.module.message.dtovo.MessageDto;
 import com.yun.yunwsserver.module.mguser.entity.MgUser;
 import com.yun.yunwsserver.module.wesocket.model.WsRspMessage;
-import com.yun.yunwsserver.module.wesocket.model.enumtype.WsRspMessageType;
+import com.yun.yunwsserver.module.wesocket.model.WsRspMessageType;
 import com.yun.yunwsserver.module.wesocket.service.ImWebSocketService;
 import com.yun.yunwsserver.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class MessageService extends BaseServiceImpl {
 
         MgUser mgUser = RequestUtil.getAccessUser();
 
-        QGroupUserRl userRl = QGroupUserRl.groupUserRl;
+        QConversationUserRl userRl = QConversationUserRl.conversationUserRl;
         List<String> userSsIdList = queryFactory.select(userRl.sessionId)
                 .from(userRl)
-                .where(userRl.pkId.mgUserId.eq(mgUser.getId())
-                        .and(userRl.pkId.clientGroupId.eq(dto.getClientGroupId())))
+                .where(userRl.mgUserId.eq(mgUser.getId())
+                        .and(userRl.extraCvsId.eq(dto.getExtraConversationId())))
                 .fetch();
 
         for (String ssId : userSsIdList) {
